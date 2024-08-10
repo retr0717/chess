@@ -14,6 +14,7 @@ export class GameManager {
   }
 
   addPlayer(socket: WebSocket) {
+    console.log("Add player");
     this.players.push(socket);
     this.addHandler(socket);
   }
@@ -25,6 +26,7 @@ export class GameManager {
   addHandler(socket: WebSocket) {
     socket.on("message", (data) => {
       const message = JSON.parse(data.toString());
+      console.log(message);
       if (message.type === constansts.INIT_GAME) {
         this.createGame(socket);
       }
@@ -41,13 +43,14 @@ export class GameManager {
     });
   }
 
-  createGame(player2: WebSocket) {
+  createGame(socket: WebSocket) {
+    console.log("game created");
     if (this.pendingPlayer) {
-      const game = new Game(this.pendingPlayer, player2);
+      const game = new Game(this.pendingPlayer, socket);
       this.games.push(game);
       this.pendingPlayer = null;
     } else {
-      this.pendingPlayer = player2;
+      this.pendingPlayer = socket;
     }
   }
 
