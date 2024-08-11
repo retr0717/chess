@@ -1,0 +1,15 @@
+export const constansts = {
+  INIT_GAME: "INIT_GAME",
+  MOVE: "MOVE",
+  GAME_OVER: "GAME_OVER",
+  GAME_STATE: "GAME_STATE",
+  ERROR: "ERROR",
+  RESTART: "RESTART",
+  WIN: "WIN",
+  DRAW: "DRAW",
+  LOSE: "LOSE",
+  TIE: "TIE",
+  X: "X",
+  O: "O",
+  EMPTY: "-",
+};
