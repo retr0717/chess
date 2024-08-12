@@ -18,6 +18,7 @@ const Game = () => {
       switch (message.type) {
         case constants.INIT_GAME:
           setChess(new Chess());
+          setBoard(chess.board());
           console.log("Game initialized");
           break;
         case constants.MOVE:
@@ -34,19 +35,21 @@ const Game = () => {
   if (!socket) return <div>Connecting...</div>;
 
   return (
-    <div className="flex justify-center">
-      <div className="pt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <ChessBoard />
-        </div>
-        <div className="flex justify-center">
-          <Button
-            onClick={() => {
-              socket.send(JSON.stringify({ type: constants.INIT_GAME }));
-            }}
-          >
-            Default
-          </Button>
+    <div className="flex justify-center h-screen">
+      <div className="pt-8 max-w-screen-lg w-full">
+        <div className="grid grid-cols-6 gap-4 w-full">
+          <div className="col-span-4 w-full flex justify-center">
+            <ChessBoard board={board} />
+          </div>
+          <div className="col-span-2 w-full flex justify-center">
+            <Button
+              onClick={() => {
+                socket.send(JSON.stringify({ type: constants.INIT_GAME }));
+              }}
+            >
+              Join Room
+            </Button>
+          </div>
         </div>
       </div>
     </div>
