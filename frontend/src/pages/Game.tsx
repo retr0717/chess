@@ -17,12 +17,12 @@ const Game = () => {
       console.log(message);
       switch (message.type) {
         case constants.INIT_GAME:
-          setChess(new Chess());
           setBoard(chess.board());
           console.log("Game initialized");
           break;
         case constants.MOVE:
-          chess.move(message.payload.move);
+          console.log("useeffct:", message);
+          chess.move(message.payload);
           setBoard(chess.board());
           // setBoard(new Chess(board.fen()));
           break;
@@ -39,7 +39,12 @@ const Game = () => {
       <div className="pt-8 max-w-screen-lg w-full">
         <div className="grid grid-cols-6 gap-4 w-full">
           <div className="col-span-4 w-full flex justify-center">
-            <ChessBoard board={board} />
+            <ChessBoard
+              board={board}
+              socket={socket}
+              setBoard={setBoard}
+              chess={chess}
+            />
           </div>
           <div className="col-span-2 w-full flex justify-center">
             <Button
