@@ -9,7 +9,7 @@ const Game = () => {
   const socket = useSocket();
   const [chess, setChess] = useState(new Chess());
   const [board, setBoard] = useState(chess.board());
-
+  const [start, setStart] = useState(false);
   useEffect(() => {
     if (!socket) return;
     socket.onmessage = (event) => {
@@ -18,6 +18,7 @@ const Game = () => {
       switch (message.type) {
         case constants.INIT_GAME:
           setBoard(chess.board());
+          setStart(true);
           console.log("Game initialized");
           break;
         case constants.MOVE:
@@ -47,13 +48,17 @@ const Game = () => {
             />
           </div>
           <div className="col-span-2 w-full flex justify-center">
-            <Button
-              onClick={() => {
-                socket.send(JSON.stringify({ type: constants.INIT_GAME }));
-              }}
-            >
-              Join Room
-            </Button>
+            <div className="pt-8">
+              {!start && (
+                <Button
+                  onClick={() => {
+                    socket.send(JSON.stringify({ type: constants.INIT_GAME }));
+                  }}
+                >
+                  Join Room
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
